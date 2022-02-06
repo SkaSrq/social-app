@@ -14,7 +14,8 @@ router.post("/register", async(req, res)=>{
         const user = await new User({
             username: req.body?.username,
             email: req.body?.email,
-            password: hashedPassword
+            password: hashedPassword,
+            profilePicture: req.body?.profilePicture
         });
 
         // save user to database
@@ -43,8 +44,8 @@ router.post("/login", async(req, res)=>{
             return res.status(400).json("wrong password")
         }
             
-
-        return res.status(200).json(user);
+        const {password, ...others} = user._doc;
+        return res.status(200).json(others);
     } catch (error) {
         console.warn(error);
         res.status(500).json(error);

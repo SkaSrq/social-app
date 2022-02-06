@@ -4,9 +4,7 @@ import Share from "../share/Share";
 import "./feed.css";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
-// import {Posts} from "../../dummyData";
 const Feed = ({ username }) => {
-  const SA = process.env.REACT_APP_SERVER_ADD;
   const [posts, setPosts] = useState([]);
 
   const {user} = useContext(AuthContext);

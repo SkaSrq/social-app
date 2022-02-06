@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import { AuthContext } from "../../context/AuthContext";
 
 const Topbar = () => {
-  const user = useContext(AuthContext);
+  const {user} = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   return (
     <div className="topbarContainer">

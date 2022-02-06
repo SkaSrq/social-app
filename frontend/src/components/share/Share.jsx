@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { PermMedia, Label, Room, EmojiEmotions, Cancel } from "@mui/icons-material";
-import Button from "@mui/material/Button";
 import "./share.css";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";

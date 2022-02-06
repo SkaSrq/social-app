@@ -3,20 +3,21 @@ import "./rightbar.css";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@mui/icons-material";
 const Rightbar = ({ user }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [followed, setFollowed] = useState(false);
 
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("/users/friends/" + user._id);
+        const friendList = await axios.get("/users/friends/" + user?._id);
         setFriends(friendList.data);
       } catch (error) {
         console.log(error);
@@ -28,6 +29,12 @@ const Rightbar = ({ user }) => {
   // useEffect(() => {
   //   setFollowed(currentUser.followings.includes(user?._id));
   // }, [currentUser, user._id]);
+
+  const handleLogout = (e)=>{
+    e.preventDefault();
+    dispatch({type:"LOGOUT", payload: null});
+    navigate("/login");
+  }
 
   const handleFollow = async () => {
     try {
@@ -71,12 +78,15 @@ const Rightbar = ({ user }) => {
   const ProfileRightbar = () => {
     return (
       <div className="userRightbar">
-        {user.username !== currentUser.username && (
+        {user.username !== currentUser.username? (
           <button className="rightbarFollowButton" onClick={handleFollow}>
             {followed ? "Unfollow" : "Follow"}
             {followed ? <Remove /> : <Add />}
           </button>
-        )}
+        ):
+        (<button className="rightbarFollowButton" onClick={handleLogout}>
+            Logout
+          </button>)}
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
